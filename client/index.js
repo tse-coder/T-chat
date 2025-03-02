@@ -8,8 +8,8 @@ import multer from "multer";
 import imgbbUploader from 'imgbb-uploader';
 
 const app = express();
-const port = process.env.CLIENT_PORT;
-const serverURL = `http://localhost:${process.env.SERVER_PORT}`;
+const port = 5000;
+const serverURL = "https://t-chat-mu67.onrender.com";
 
 let users = []
 let messages = []
@@ -233,7 +233,7 @@ app.get("/changepp",(req,res)=>{
 
 app.listen(port, (err) => {
   if (err) console.log(err);
-  else console.log(`running on http://localhost:${port}`);
+  else console.log(`running on port ${port}`);
 });
 
 
