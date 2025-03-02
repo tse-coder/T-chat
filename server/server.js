@@ -35,7 +35,7 @@ const messageSchema = new mongoose.Schema(
 const User = new mongoose.model("user", mySchema);
 const Message = new mongoose.model("message", messageSchema);
 
-const port = process.env.SERVER_PORT;
+const port = 3000;
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
