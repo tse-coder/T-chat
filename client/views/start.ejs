@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login or signup</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="start-page">
+        <% if (locals.login) { %>
+            <div class="log-in box">
+                <form action="/login" method="post">
+                    <h1>log In</h1>
+                    <input type="text" placeholder="Enter username..." name="username" minlength="4" required>
+                    <input type="password" placeholder="password..." name="password" minlength="6" required>
+                    <% if (locals.error) { %>
+                        <p style="color: red;font-size: 14px;"><%= error %></p>
+                    <% } %>
+                    <button type="submit">sign In</button>
+                    <p>or</p>
+                    <a href="/signup">signup</a>
+                </form>
+            </div>
+        <% }else if(locals.signup){ %>
+            <div class="sign-up box">
+                <form action="/signup" method="post">
+                    <h1>Sign In</h1>
+                    <input type="text" name="username" placeholder="Enter username..." minlength="4" required>
+                    <input type="password" name="password" placeholder="Enter password..." minlength="6" required>
+                    <input type="password" name="password-validation" placeholder="Re-enter password" minlength="6" required>
+                    <% if (locals.error) { %>
+                        <p style="color: red;font-size: 14px;"><%= error %></p>
+                    <% } %>
+                    <button type="submit">sign up</button>
+                    <p>or</p>
+                    <a href="/login">login</a>
+                </form>
+            </div>
+        <% }else{ %>
+            <div class="start">
+                <img src="./images/logo.svg" alt="logo">
+                <h1>T-CHAT</h1>
+                <a href="/login" role="button">start messaging</a>
+            </div>
+        <% } %>
+    </div>
+</body>
+</html>

@@ -1,0 +1,436 @@
+:root {
+    --background: #090909;
+    --background-2: #000;
+    --background-3: #222222;
+    --accent-color: #00FF38;
+    --accent-color-2: #00FF38a2;
+    --border-color: #8f8f8f;
+    --font-color: #f9f9f9;
+    --background-transparent:#0007;
+    --accent-transparent:#00ff3738;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: var(--font-color);
+    font-family: "Roboto", Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.container {
+    background: var(--background);
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 60px auto;
+    width: 100%;
+    height: 100vh;
+}
+
+
+.container .nav {
+    grid-area: 1/1/2/3;
+    background: var(--background-2);
+    margin: 6px;
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 6px;
+    position: relative;
+}
+
+.nav>div {
+    border-radius: 10px;
+}
+
+.container .nav .left {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.container .left span {
+    position: absolute;
+    width: 6px;
+    height: 100%;
+    background: var(--background-3);
+    border-radius: 3px;
+    right: -6px;
+    top: 0;
+}
+
+.container .nav .left img {
+    width: 40px;
+    cursor: pointer;
+}
+
+.nav .left p {
+    color: var(--accent-color);
+}
+
+.container .nav .left img.pp {
+    position: absolute;
+    right: 10px;
+    width: 40px;
+}
+
+.nav .right {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 10px;
+
+}
+
+.container .right img {
+    width: 40px;
+    margin-left: 10px;
+}
+
+.container .right p {
+    font-size: 17px;
+    padding-top: 3px;
+}
+
+.nav .right .status {
+    font-size: 12px;
+    color: var(--accent-color);
+}
+
+.nav .pp {
+    height: 40px;
+    border-radius: 50%;
+    border: var(--accent-color) solid 1px;
+}
+
+.users {
+    display: grid;
+    gap: 10px;
+    height: 100px;
+}
+
+.users button {
+    width: 100%;
+}
+
+.users .user {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 10px;
+    padding: 3px 10px;
+    position: relative;
+    background: var(--background-3);
+    border-radius: 4px;
+    margin-inline: 3px;
+    overflow: hidden;
+    height: max-content;
+    border: var(--border-color) 1px solid;
+    text-align: left;
+}
+
+.user img {
+    height: 40px;
+    width: 40px;
+    border: var(--accent-color-2) solid 1px;
+    border-radius: 50%;
+}
+
+.users .user .user-name {
+    font-size: 17px;
+    padding-top: 3px;
+    color: var(--accent-color-2);
+}
+
+.users .user-message {
+    font-size: 12px;
+}
+
+.user span {
+    position: absolute;
+    width: 30px;
+    right: 0;
+    top: 0;
+    height: 100%;
+    background: var(--accent-color-2);
+}
+
+.user.active span {
+    background: var(--accent-color);
+}
+
+.chat-box {
+    position: relative;
+    margin: 10px;
+    font-size: 12px;
+}
+
+.chat-box .box {
+    max-width: 60%;
+    padding: 10px;
+    margin-block: 3px;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 1rem;
+}
+
+.box.in {
+    background: var(--background-3);
+    margin-right: 40%;
+}
+
+.box.out {
+    background: var(--accent-color-2);
+    margin-left: 40%;
+}
+
+.box .time {
+    text-align: right;
+    font-size: 0.6rem;
+}
+
+.message-box {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: 50px;
+    gap: 10px;
+    padding: 5px 20px;
+    background: var(--background-3);
+    border-radius: 25px;
+}
+
+.message-box img {
+    height: 30px;
+    width: 30px;
+}
+
+.message-box input {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    border-radius: 20px;
+    background: var(--background);
+    padding: 20px;
+    color: var(--font-color);
+}
+
+.message-box input:focus {
+    outline: none;
+    color: var(--font-color);
+    background: var(--background);
+}
+
+.message-box button {
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+}
+
+/* start page */
+
+.start-page {
+    width: 100%;
+    height: 100vh;
+    background: var(--background);
+    display: grid;
+    place-items: center;
+}
+
+.start-page .box {
+    height: 500px;
+    width: 350px;
+    border-radius: 20px;
+    background: var(--background-2);
+    box-shadow: var(--background-3) 1px 1px 10px 2px;
+}
+
+.start-page form {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.start-page h1 {
+    color: var(--accent-color-2);
+    margin-block: 35px;
+}
+
+.start-page form input {
+    height: 50px;
+    width: 70%;
+    border-radius: 25px;
+    background: var(--background-3);
+    border: var(--border-color) solid 2px;
+    color: var(--font-color);
+    padding: 0 25px;
+    margin-bottom: 30px;
+    cursor: pointer;
+}
+
+input:focus {
+    outline: 0;
+}
+
+input:invalid {
+    border: red solid 2px;
+}
+
+.start-page form button {
+    height: 50px;
+    width: 50%;
+    background: var(--accent-color-2);
+    border-radius: 25px;
+    font-size: 1.1em;
+    border: 0;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+form a {
+    text-decoration: none;
+    color: var(--accent-color-2);
+}
+
+.start img {
+    width: 300px;
+}
+
+.start h1 {
+    width: 100%;
+    text-align: center;
+    font-size: 50px;
+}
+
+.start a {
+    background-color: var(--accent-color-2);
+    text-decoration: none;
+    padding: 20px;
+    font-size: 25px;
+    display: block;
+    margin-inline: auto;
+    text-align: center;
+    border-radius: 20px;
+}
+
+.start a:hover {
+    box-shadow: var(--border-color) 0 0 10px 2px;
+}
+
+/* menu-page */
+.menu-page{
+    position: absolute;
+    inset: 0 0 0 0;
+    display: none;
+    place-items: center;
+    width: 100vw;
+    height: 100vh;
+    background: var(--background-transparent);
+}
+.menu-page form{
+    height: 500px;
+    width : 400px;
+    display: flex;
+    flex-direction: column;
+    background: var(--background-2); 
+    border-radius: 20px;
+    overflow: hidden;
+    text-align: center;
+    position: relative;
+    border: var(--border-color) solid .5px;
+}
+.menu-page form .pic{
+    width: 100%;
+    height: 40%;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+}
+form .pic img{
+    width: 100%;
+}
+
+.change-pp{
+    width: 100%;
+    height: 100%;
+    background-color: #0002;
+    display: none;
+    place-items: center;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+}
+
+.change-pp a{
+    background: transparent;
+    height: 50px;
+    font-size: 1.1rem;
+    color: var(--background-3);
+    border: var(--background-3) solid 3px;
+    padding: 10px;
+    border-radius: 25px;
+}
+.change-pp a:hover{
+    background: var(--background-transparent);
+}
+.menu-page form .pic:hover .change-pp{
+    display: grid;
+}
+.menu-page form input{
+    background: var(--background-3);
+    text-align: center;
+    font-size: 2.5rem;
+    border: 0.5px solid;
+}
+.menu-page form input:disabled{
+    background: transparent;
+    border: 0;
+}
+.menu-page form p{
+    padding-bottom: 50px;
+}
+.menu-page form h3{
+    padding-block: 10px;
+    margin-inline: 30px;
+    position: relative;
+    font-weight: 100;
+    cursor: pointer;
+}
+.menu-page form h3:hover{
+    background-color: var(--accent-transparent);
+}
+.menu-page form h3::before,
+.menu-page form h3::after{
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: .2px;
+    width: 100%;
+    background-color: var(--border-color);
+    border-radius: 50%;
+}
+.menu-page form h3::after{
+    top: 100%;
+}
+.menu-page form svg{
+    position: absolute;
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    z-index: 2;
+}
+.menu-page form svg.edit{
+    top: 43%;
+    right: 40px;
+    fill: var(--accent-color);
+}
+.menu-page form svg:hover{
+    background: var(--background-transparent);
+}
