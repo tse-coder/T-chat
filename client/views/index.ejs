@@ -11,7 +11,7 @@
         rel="stylesheet">
     <title>T-chat | meet and talk</title>
     <link rel="stylesheet" href="./style.css">
-    <script src="https://t-chat-mu67.onrender.com/socket.io/socket.io.js"></script>
+    <script src="https://localhost:5000/socket.io/socket.io.js"></script>
 </head>
 
 <body>
@@ -122,7 +122,7 @@
         </form>
     </div>
     <script>
-        const socket = io("https://t-chat-mu67.onrender.com", {
+        const socket = io("https://localhost:5000", {
             transports: ["websocket", "polling"] // Ensure compatibility
         });
 

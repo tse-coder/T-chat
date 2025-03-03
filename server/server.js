@@ -35,13 +35,13 @@ const messageSchema = new mongoose.Schema(
 const User = new mongoose.model("user", mySchema);
 const Message = new mongoose.model("message", messageSchema);
 
-const port = 3000;
+const port = process.env.PORT || 5000;
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 const server = http.createServer(app);
-const origin = "https://t-chat-e5ss.onrender.com";
-
+//const origin = "https://t-chat-e5ss.onrender.com";
+const origin = "http://localhost:3000"
 // Enable CORS for Express requests (if needed)
 app.use(cors({ origin: origin, methods: ["GET", "POST"] }));
 

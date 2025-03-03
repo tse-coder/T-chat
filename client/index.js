@@ -8,9 +8,9 @@ import multer from "multer";
 import imgbbUploader from 'imgbb-uploader';
 
 const app = express();
-const port = 5000;
-const serverURL = "https://t-chat-mu67.onrender.com";
-
+const port = process.env.PORT || 3000;
+//const serverURL = "https://t-chat-mu67.onrender.com";
+const serverURL = "http://localhost:5000"
 let users = []
 let messages = []
 
