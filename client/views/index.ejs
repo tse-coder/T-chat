@@ -199,7 +199,7 @@
                 document.querySelector(".chat-box").innerHTML = ''
                 document.querySelector(".chat-box").appendChild(messageBox);
                 let messages = []
-                await fetch(`http://localhost:3000/getMessages?sender=${sender}`)
+                await fetch(`/getMessages?sender=${sender}`)
                     .then(async (Response) => {
                         messages = await Response.json()
                     })
