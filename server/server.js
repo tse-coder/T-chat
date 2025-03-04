@@ -41,7 +41,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 const server = http.createServer(app);
 
-const origin = "http://localhost:3000"
+const origin = "https://t-messanger.onrender.com"
 // Enable CORS for Express requests 
 app.use(cors({ origin: origin, methods: ["GET", "POST"] }));
 
