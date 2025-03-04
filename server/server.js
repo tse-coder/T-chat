@@ -35,7 +35,7 @@ const messageSchema = new mongoose.Schema(
 const User = new mongoose.model("user", mySchema);
 const Message = new mongoose.model("message", messageSchema);
 
-const port = process.env.SERVER_PORT;
+const port = process.env.PORT || 5000;
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
@@ -54,17 +54,14 @@ const io = new Server(server, {
 });
 
 io.on("connection", (socket) => {
-  console.log("connected to " + socket.id);
 
   socket.on("joinroom", (room) => {
     socket.join(room);
-    console.log(`${socket.id} joined room ${room}`);
   });
 
   socket.on("message", (message, room) => {
     socket.join(room);
     socket.to(room).emit("reply", message);
-    console.log(message + " sent to " + room);
   });
 });
 
@@ -182,7 +179,6 @@ app.post("/changePassword", async (req, res) => {
   } else {
     res.json({ error: "The new passwords are different" });
   }
-  console.log(req.body);
 });
 
 app.post("/changepp",async(req,res)=>{
