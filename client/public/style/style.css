@@ -229,7 +229,8 @@
     background: transparent;
     cursor: pointer;
 }
-#emojiPicker{
+
+#emojiPicker {
     position: absolute;
     bottom: 100%;
     display: none;
