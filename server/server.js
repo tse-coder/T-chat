@@ -40,9 +40,9 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 const server = http.createServer(app);
-//const origin = "https://t-chat-e5ss.onrender.com";
+
 const origin = "http://localhost:3000"
-// Enable CORS for Express requests (if needed)
+// Enable CORS for Express requests 
 app.use(cors({ origin: origin, methods: ["GET", "POST"] }));
 
 // Enable CORS for Socket.io
