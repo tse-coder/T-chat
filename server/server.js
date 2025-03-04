@@ -9,10 +9,10 @@ import md5 from "md5";
 import cors from "cors";
 
 mongoose
-  .connect(process.env.CONNECTION_STRING)
+  .connect("mongodb://localhost:27017/chatApp")
   .then(() => console.log("MongoDB Connected Successfully"))
   .catch((err) => console.error("MongoDB Connection Error:", err));
-
+//process.env.CONNECTION_STRING
 const mySchema = new mongoose.Schema(
   {
     name: String,
