@@ -4,14 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
-        rel="stylesheet">
     <title>T-chat | meet and talk</title>
-    <link rel="stylesheet" href="./style.css">
-    <script src="https://localhost:5000/socket.io/socket.io.js"></script>
+    <link rel="stylesheet" href="./style/style.css">
+    <script src="http://localhost:5000/socket.io/socket.io.js"></script> <!--for socket connection-->
+    <script src="https://cdn.jsdelivr.net/npm/emoji-picker-element@1.10.1/database.js" type="module"></script>
+    <script src="https://cdn.jsdelivr.net/npm/emoji-picker-element@1.10.1/picker.js" type="module"></script><!--for emoji picker-->
+    <link rel="icon" type="image/svg" href="./images/logo.svg">
 </head>
 
 <body>
@@ -35,10 +33,10 @@
                             <%= receiver.status %>
                         </p>
                     </div>
-                    <% } %>
+                <% } %>
             </div>
         </div>
-        <div class="users">
+        <div class="users vertical-scrollbar">
             <% users.forEach(member=> { %>
                 <div>
                     <button type="submit" class="user"
@@ -48,14 +46,13 @@
                             <p class="user-name">
                                 <%= member.name %>
                             </p>
-                            <!-- <p class="user-message">Lorem ipsum dolor sit...</p> -->
                         </div>
                         <span></span>
                     </button>
                 </div>
-                <% }) %>
+            <% }) %>
         </div>
-        <div class="chat-box">
+        <div class="chat-box vertical-scrollbar">
             <% if (locals.receiver) { %>
                 <div class="message-box">
                     <img src="./images/emoji.png" alt="emoji">
@@ -65,9 +62,9 @@
                         onclick="sendMessage('<%= user.name %>' ,'<%= receiver.name %>', document.getElementById('message').value)"><img
                             src="./images/send.png" alt=""></button>
                 </div>
-                <% } else{ %>
-                    <script> console.log('no receiver')</script>
-                    <% } %>
+            <% } else{ %>
+                <script> console.log('no receiver')</script>
+            <% } %>
         </div>
 
     </div>
@@ -132,7 +129,7 @@
         const goToMenu = () => {
             document.querySelector(".menu-page").style.display = "grid"
         }
-
+        
         const enableEdit = () => {
             document.getElementById("username").removeAttribute("disabled")
             document.getElementById("finish").style.display = "block"
@@ -169,7 +166,9 @@
             return `${hours}:${minutes}:${seconds}`;
         }
         let joinedUser;
-
+        let picker;
+        let emojiBtn;
+        let sendBtn;
         const join = async (sender, receiver, pp, status) => {
             if (joinedUser != receiver) {
                 joinedUser = receiver
@@ -193,8 +192,8 @@
 
                 let messageBox = document.createElement('div');
                 messageBox.className = "message-box";
-                messageBox.innerHTML = `<img src="./images/emoji.png" alt="emoji">
-                                        <img src="./images/attach.png" alt="attach">
+                messageBox.innerHTML = `<button id="emojiBtn"><img src="./images/emoji.png" id="emoji-btn" alt="emoji"></button>
+                                        <emoji-picker id="emojiPicker"></emoji-picker>
                                         <input type="text" placeholder="message.." name="message" id="message">
                                         <button onclick= "sendMessage( '${sender}' ,'${receiver}', document.getElementById('message').value)"><img src="./images/send.png" alt=""></button>`
                 document.querySelector(".chat-box").innerHTML = ''
@@ -217,9 +216,17 @@
                     } else if (msg.sender == receiver && msg.receiver == sender) {
                         msgbox.className = "in box";
                         document.querySelector(".chat-box").appendChild(msgbox);
-                    }
-
+                    }  
                 })
+                picker = document.getElementById("emojiPicker");
+                emojiBtn = document.getElementById("emojiBtn");
+
+                emojiBtn.addEventListener("click",()=>{
+                    picker.style.display = picker.style.display =="none"?"block":"none";
+                })
+                picker.addEventListener("emoji-click", (event) => {
+                    document.getElementById("message").value += event.detail.unicode;
+                });
             }
 
         }
@@ -234,6 +241,7 @@
         })
 
         const sendMessage = async (sender, receiver, message) => {
+            document.getElementById("emojiPicker").style.display = "none";
             let msgbox = document.createElement("div")
             msgbox.className = "out box";
             const fullTime = makeTime('now')

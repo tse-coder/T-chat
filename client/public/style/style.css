@@ -6,8 +6,8 @@
     --accent-color-2: #00FF38a2;
     --border-color: #8f8f8f;
     --font-color: #f9f9f9;
-    --background-transparent:#0007;
-    --accent-transparent:#00ff3738;
+    --background-transparent: #0007;
+    --accent-transparent: #00ff3738;
 }
 
 * {
@@ -15,7 +15,7 @@
     padding: 0;
     box-sizing: border-box;
     color: var(--font-color);
-    font-family: "Roboto", Verdana, Geneva, Tahoma, sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .container {
@@ -25,6 +25,7 @@
     grid-template-rows: 60px auto;
     width: 100%;
     height: 100vh;
+    overflow: hidden;
 }
 
 
@@ -51,11 +52,11 @@
 
 .container .left span {
     position: absolute;
-    width: 6px;
+    width: 5px;
     height: 100%;
     background: var(--background-3);
     border-radius: 3px;
-    right: -6px;
+    right: 0;
     top: 0;
 }
 
@@ -79,7 +80,6 @@
     align-items: center;
     justify-content: start;
     gap: 10px;
-
 }
 
 .container .right img {
@@ -106,7 +106,8 @@
 .users {
     display: grid;
     gap: 10px;
-    height: 100px;
+    grid-template-rows: repeat(auto-fill, 50px);
+    padding-inline: 7px;
 }
 
 .users button {
@@ -124,7 +125,8 @@
     border-radius: 4px;
     margin-inline: 3px;
     overflow: hidden;
-    height: max-content;
+    height: 50px;
+    max-height: max-content;
     border: var(--border-color) 1px solid;
     text-align: left;
 }
@@ -142,10 +144,6 @@
     color: var(--accent-color-2);
 }
 
-.users .user-message {
-    font-size: 12px;
-}
-
 .user span {
     position: absolute;
     width: 30px;
@@ -161,8 +159,10 @@
 
 .chat-box {
     position: relative;
-    margin: 10px;
+    padding: 20px;
     font-size: 12px;
+    overflow-y: scroll;
+    margin-bottom: 60px;
 }
 
 .chat-box .box {
@@ -171,7 +171,7 @@
     margin-block: 3px;
     border-radius: 5px;
     color: #fff;
-    font-size: 1rem;
+    font-size: 0.8rem;
 }
 
 .box.in {
@@ -190,9 +190,10 @@
 }
 
 .message-box {
-    position: absolute;
+    position: fixed;
     bottom: 10px;
-    width: 100%;
+    right: 5%;
+    width: 50%;
     display: flex;
     align-items: center;
     height: 50px;
@@ -227,6 +228,12 @@
     border: 0;
     background: transparent;
     cursor: pointer;
+}
+#emojiPicker{
+    position: absolute;
+    bottom: 100%;
+    display: none;
+    border-radius: 30px;
 }
 
 /* start page */
@@ -321,7 +328,7 @@ form a {
 }
 
 /* menu-page */
-.menu-page{
+.menu-page {
     position: absolute;
     inset: 0 0 0 0;
     display: none;
@@ -330,30 +337,33 @@ form a {
     height: 100vh;
     background: var(--background-transparent);
 }
-.menu-page form{
+
+.menu-page form {
     height: 500px;
-    width : 400px;
+    width: 400px;
     display: flex;
     flex-direction: column;
-    background: var(--background-2); 
+    background: var(--background-2);
     border-radius: 20px;
     overflow: hidden;
     text-align: center;
     position: relative;
     border: var(--border-color) solid .5px;
 }
-.menu-page form .pic{
+
+.menu-page form .pic {
     width: 100%;
     height: 40%;
     overflow: hidden;
     position: relative;
     cursor: pointer;
 }
-form .pic img{
+
+form .pic img {
     width: 100%;
 }
 
-.change-pp{
+.change-pp {
     width: 100%;
     height: 100%;
     background-color: #0002;
@@ -364,7 +374,7 @@ form .pic img{
     z-index: 1;
 }
 
-.change-pp a{
+.change-pp a {
     background: transparent;
     height: 50px;
     font-size: 1.1rem;
@@ -373,37 +383,45 @@ form .pic img{
     padding: 10px;
     border-radius: 25px;
 }
-.change-pp a:hover{
+
+.change-pp a:hover {
     background: var(--background-transparent);
 }
-.menu-page form .pic:hover .change-pp{
+
+.menu-page form .pic:hover .change-pp {
     display: grid;
 }
-.menu-page form input{
+
+.menu-page form input {
     background: var(--background-3);
     text-align: center;
     font-size: 2.5rem;
     border: 0.5px solid;
 }
-.menu-page form input:disabled{
+
+.menu-page form input:disabled {
     background: transparent;
     border: 0;
 }
-.menu-page form p{
+
+.menu-page form p {
     padding-bottom: 50px;
 }
-.menu-page form h3{
+
+.menu-page form h3 {
     padding-block: 10px;
     margin-inline: 30px;
     position: relative;
     font-weight: 100;
     cursor: pointer;
 }
-.menu-page form h3:hover{
+
+.menu-page form h3:hover {
     background-color: var(--accent-transparent);
 }
+
 .menu-page form h3::before,
-.menu-page form h3::after{
+.menu-page form h3::after {
     content: "";
     position: absolute;
     top: 0;
@@ -413,10 +431,12 @@ form .pic img{
     background-color: var(--border-color);
     border-radius: 50%;
 }
-.menu-page form h3::after{
+
+.menu-page form h3::after {
     top: 100%;
 }
-.menu-page form svg{
+
+.menu-page form svg {
     position: absolute;
     height: 35px;
     width: 35px;
@@ -426,11 +446,117 @@ form .pic img{
     cursor: pointer;
     z-index: 2;
 }
-.menu-page form svg.edit{
+
+.menu-page form svg.edit {
     top: 43%;
     right: 40px;
     fill: var(--accent-color);
 }
-.menu-page form svg:hover{
+
+.menu-page form svg:hover {
     background: var(--background-transparent);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--accent-color-2);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar {
+    background: var(--background-3);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent-color-2);
+}
+
+.vertical-scrollbar {
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.vertical-scrollbar::-webkit-scrollbar {
+    width: 5px;
+}
+
+@media (max-width:700px) {
+    .container {
+        grid-template-columns: 100%;
+        grid-template-rows: 60px 210px auto;
+    }
+
+    .container .nav {
+        grid-area: 1/1/2/2;
+        grid-template-columns: 100%;
+    }
+
+    .container .left span {
+        height: 3px;
+        width: 100%;
+        top: 105%;
+        left: 0;
+    }
+
+    .nav .right {
+        position: absolute;
+        top: 260px;
+        width: 100%;
+    }
+
+    .nav .right::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        height: 3px;
+        width: 100%;
+        background-color: var(--background-3);
+        border-radius: 1.5px;
+        top: 120%;
+    }
+
+    .users {
+        margin: 10px;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        overflow-x: scroll;
+        overflow-y: hidden;
+    }
+
+    .users .user {
+        width: 300px;
+    }
+
+    .users::-webkit-scrollbar {
+        height: 5px;
+    }
+
+    .users::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+    }
+
+    .chat-box {
+        margin-top: 50px;
+    }
+
+    .chat-box::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    .message-box {
+        width: 80%;
+    }
+
+    .menu-page form input {
+        font-size: 2rem;
+    }
+
+    .menu-page form h3 {
+        font-size: 1rem;
+    }
+
+    .menu-page form {
+        height: 450px;
+        width: 300px;
+    }
 }

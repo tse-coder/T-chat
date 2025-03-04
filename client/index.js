@@ -6,17 +6,18 @@ import axios from 'axios';
 import md5 from "md5";
 import multer from "multer";
 import imgbbUploader from 'imgbb-uploader';
+import fs from 'fs';
 
 const app = express();
 const port = process.env.PORT || 3000;
-//const serverURL = "https://t-chat-mu67.onrender.com";
-const serverURL = "http://localhost:5000"
+const serverURL = `http://localhost:${process.env.SERVER_PORT}`;
+
 let users = []
 let messages = []
 
-app.use(express.json())
+app.use(express.json());
 app.use(express.static("public"));
-const upload = multer({dest:'posts/'})
+const upload = multer({dest: "uploads/"});
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", 'ejs' )
 
@@ -50,7 +51,6 @@ const getMessages = async(sender)=>{
 }
 app.post("/changepp",upload.single('picture'),async(req,res)=>{
   const img = await imgbbUploader(process.env.IMGBB_API_KEY,req.file.path)
-
   axios.post(serverURL+"/changepp",{
     pp:img.url,
     name:req.body.username
@@ -73,6 +73,10 @@ app.post("/changepp",upload.single('picture'),async(req,res)=>{
       })
     }
   }).catch(err=>res.render("changePP",{error:"failed to change try again"}))
+  fs.unlink(req.file.path,(err)=>{
+    if(err) console.log("delete failed")
+    else console.log("deleted success")
+  })
 })
 
 app.post("/login",async(req,res)=>{

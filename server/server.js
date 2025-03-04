@@ -54,17 +54,14 @@ const io = new Server(server, {
 });
 
 io.on("connection", (socket) => {
-  console.log("connected to " + socket.id);
 
   socket.on("joinroom", (room) => {
     socket.join(room);
-    console.log(`${socket.id} joined room ${room}`);
   });
 
   socket.on("message", (message, room) => {
     socket.join(room);
     socket.to(room).emit("reply", message);
-    console.log(message + " sent to " + room);
   });
 });
 
@@ -182,7 +179,6 @@ app.post("/changePassword", async (req, res) => {
   } else {
     res.json({ error: "The new passwords are different" });
   }
-  console.log(req.body);
 });
 
 app.post("/changepp",async(req,res)=>{
