@@ -11,7 +11,10 @@ import cors from "cors";
 mongoose
   .connect(process.env.CONNECTION_STRING)
   .then(() => console.log("MongoDB Connected Successfully"))
-  .catch((err) => console.error("MongoDB Connection Error:", err));
+  .catch((err) => {
+    console.error("MongoDB Connection Error:", err);
+    setTimeout(connectWithRetry, 5000);
+  });
 
 const mySchema = new mongoose.Schema(
   {
