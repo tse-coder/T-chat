@@ -8,14 +8,7 @@ import bodyParser from "body-parser";
 import md5 from "md5";
 import cors from "cors";
 
-mongoose.connect(process.env.CONNECTION_STRING, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  retryWrites: true,
-  w: "majority",
-  serverSelectionTimeoutMS: 5000, // Timeout after 5 seconds
-  socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
-});
+mongoose.connect(process.env.CONNECTION_STRING);
 
 mongoose.connection.on("connected", () => {
   console.log("MongoDB connected successfully");
