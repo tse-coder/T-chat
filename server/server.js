@@ -8,7 +8,12 @@ import bodyParser from "body-parser";
 import md5 from "md5";
 import cors from "cors";
 
-mongoose.connect(process.env.CONNECTION_STRING);
+mongoose.connect(process.env.CONNECTION_STRING,{
+  serverSelectionTimeoutMS: 5000,  // Avoid long waits if the DB is down
+  socketTimeoutMS: 45000, // Increases socket timeout
+  keepAlive: true, // Keeps the connection alive
+  keepAliveInitialDelay: 300000
+});
 
 mongoose.connection.on("connected", () => {
   console.log("MongoDB connected successfully");
@@ -20,7 +25,12 @@ mongoose.connection.on("error", (err) => {
 
 mongoose.connection.on("disconnected", () => {
   console.log("MongoDB disconnected. Reconnecting...");
-  mongoose.connect(process.env.CONNECTION_STRING); // Reconnect
+  mongoose.connect(process.env.CONNECTION_STRING,{
+    serverSelectionTimeoutMS: 5000,  // Avoid long waits if the DB is down
+    socketTimeoutMS: 45000, // Increases socket timeout
+    keepAlive: true, // Keeps the connection alive
+    keepAliveInitialDelay: 300000
+  }); // Reconnect
 });
 const mySchema = new mongoose.Schema(
   {
