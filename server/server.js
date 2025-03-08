@@ -8,30 +8,42 @@ import bodyParser from "body-parser";
 import md5 from "md5";
 import cors from "cors";
 
-mongoose.connect(process.env.CONNECTION_STRING,{
-  serverSelectionTimeoutMS: 5000,  // Avoid long waits if the DB is down
-  socketTimeoutMS: 45000, // Increases socket timeout
-  keepAlive: true, // Keeps the connection alive
-  keepAliveInitialDelay: 300000
-});
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.CONNECTION_STRING, {
+      serverSelectionTimeoutMS: 5000,  // Avoid long waits if the DB is down
+      socketTimeoutMS: 45000,          // Increases socket timeout
+      keepAlive: true,                 // Keeps the connection alive
+      keepAliveInitialDelay: 300000,   // Wait 5 minutes before checking keep-alive
+    });
+    console.log("✅ MongoDB connected successfully");
+  } catch (err) {
+    console.error("❌ MongoDB connection error:", err);
+    retryConnection(); // Retry on failure
+  }
+};
 
-mongoose.connection.on("connected", () => {
-  console.log("MongoDB connected successfully");
-});
-
+// Handle MongoDB events
 mongoose.connection.on("error", (err) => {
-  console.error("MongoDB connection error:", err);
+  console.error("❌ MongoDB error:", err);
 });
 
 mongoose.connection.on("disconnected", () => {
-  console.log("MongoDB disconnected. Reconnecting...");
-  mongoose.connect(process.env.CONNECTION_STRING,{
-    serverSelectionTimeoutMS: 5000,  // Avoid long waits if the DB is down
-    socketTimeoutMS: 45000, // Increases socket timeout
-    keepAlive: true, // Keeps the connection alive
-    keepAliveInitialDelay: 300000
-  }); // Reconnect
+  console.warn("⚠️ MongoDB disconnected. Reconnecting...");
+  retryConnection();
 });
+
+// Function to retry connection
+const retryConnection = () => {
+  setTimeout(() => {
+    console.log("🔄 Attempting to reconnect to MongoDB...");
+    connectDB();
+  }, 5000); // Wait 5 seconds before retrying
+};
+
+// Initial connection
+connectDB();
+
 const mySchema = new mongoose.Schema(
   {
     name: String,
