@@ -1,16 +1,16 @@
 import dotenv from "dotenv";
 dotenv.config();
-import express, { response } from "express";
+import express from "express";
 import bodyParser from "body-parser";
 import axios from 'axios';
-import md5 from "md5";
 import multer from "multer";
 import imgbbUploader from 'imgbb-uploader';
 import fs from 'fs';
+import bcrypt from "bcrypt";
 
 const app = express();
 const port = process.env.PORT || 3000;
-const serverURL = `http://localhost:${process.env.SERVER_PORT}`;
+const serverURL = `http://localhost:5000`;
 
 let users = []
 let messages = []
@@ -79,43 +79,53 @@ app.post("/changepp",upload.single('picture'),async(req,res)=>{
   })
 })
 
-app.post("/login",async(req,res)=>{
-  const name = req.body.username;
-  const password = req.body.password;
-  //check if the user is in the database and render the index
-  let found = false;
-  let activeUser;
-  await getAllUsers();
-  users.forEach(user => {
-    if(user.name.toLowerCase() == name.toLowerCase()){
-      found = true
-      activeUser = user
+app.post("/login", async (req, res) => {
+  try {
+    const name = req.body.username;
+    const password = req.body.password;
+    //check if the user is in the database and render the index
+    let found = false;
+    let activeUser;
+    await getAllUsers();
+    users.forEach((user) => {
+      if (user.name.toLowerCase() == name.toLowerCase()) {
+        found = true;
+        activeUser = user;
+      }
+    });
+    if (found) {
+      await axios
+        .post(`${serverURL}/logIn?user=${activeUser.name}`)
+        .then(() => console.log("loged In"))
+        .catch((err) => console.log(err));
+      await getUsers(name);
+      bcrypt.compare(password, activeUser.password, (err, result) => {
+        if (result) {
+          res.render("index", {
+            users: users,
+            user: activeUser,
+            messages: messages,
+          });
+        } else {
+          res.render("start", {
+            login: 1,
+            error: "incorrect password. Try again",
+          });
+        }
+      });
+    } else {
+      res.render("start", {
+        login: 1,
+        error: "incorrect username. Try again",
+      });
     }
-  });
-  if(found){
-    await axios.post(`${serverURL}/logIn?user=${activeUser.name}`)
-    .then(()=>console.log("loged In"))
-    .catch(err=>console.log(err))
-    await getUsers(name)
-    if(activeUser.password == md5(password)){
-      res.render('index',{
-        users:users,
-        user:activeUser,
-        messages:messages
-      })
-    }else{
-      res.render('start',{
-        login:1,
-        error:"incorrect password. Try again"
-      })
-    }
-  }else{
-    res.render('start',{
-      login:1,
-      error:"incorrect username. Try again"
-    })
+  } catch {
+    res.render("start", {
+      login: 1,
+      error: "Error signing you in. Try again later",
+    });
   }
-})
+});
 
 app.post("/signup",async(req,res)=>{
   const username = req.body.username;
@@ -148,7 +158,7 @@ app.post("/signup",async(req,res)=>{
       }catch{
         res.render("start",{
           signup:1,
-          error:"Error signing you up. Try again"
+          error:"Error signing you up. Try again later"
         })
       }
     }else{
@@ -189,9 +199,10 @@ app.post("/updateuser",async(req,res)=>{
 app.post("/deleteUser",async(req,res)=>{
   try{
     await axios.post(`${serverURL}/deleteUser?user=${req.body.user}`)
-    .then(()=>console.log("deleted"))
-    .catch(err=>console.log(err))
-    res.redirect("/")
+    res.json({
+      redirected: true,
+      url: "/" 
+    });
   }catch(err){
     res.json({message:err.message})
   }
@@ -199,9 +210,11 @@ app.post("/deleteUser",async(req,res)=>{
 app.post("/logOut",async(req,res)=>{
   try{
     await axios.post(`${serverURL}/logOut?user=${req.body.user}`)
-    .then(()=>console.log("loged out"))
-    .catch(err=>console.log(err))
-    res.redirect("/")
+    
+    res.json({
+      redirected: true,
+      url: "/"
+    });
   }catch(err){
     res.json({message:err.message})
   }

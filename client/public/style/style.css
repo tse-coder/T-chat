@@ -561,3 +561,109 @@ form .pic img {
         width: 300px;
     }
 }
+
+/* change-pp page */
+#change-pp{
+    width: 100%;
+    min-height: 100dvh;
+    background-color: var(--background);
+    display: grid;
+    place-items: center;
+}
+
+#change-pp form{
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    border-radius: 25px;
+}
+#change-pp form button,
+#change-pp .choose-file{
+    height: 50px;
+    font-size: 1.3rem;
+    font-weight: 500;
+    border-radius: 25px;
+    background: var(--accent-transparent);
+    border: solid var(--border-color) 1px;
+    color: var(--font-color);
+    padding-block: 7px;
+    cursor: pointer;
+    margin-block: 20px;
+}
+#change-pp form button{
+    display: none;
+}
+#change-pp form h1{
+    color: var(--accent-color-2);
+    margin-bottom: 20px;
+}
+#change-pp form button:hover,
+#change-pp .choose-file:hover{
+    background-color: var(--accent-color-2);
+}
+#change-pp form button:focus{
+    outline: 0;
+}
+#change-pp img{
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 50%;
+    border: var(--accent-color) solid 1px;
+    box-shadow: var(--accent-color-2) 0 0 3px 2px;
+    display: none;
+}
+
+/* change-password page */
+
+#change-password{
+    width: 100vw;
+    min-height: 100dvh;
+    display: grid;
+    place-items: center;
+    background-color: var(--background);
+}
+#change-password form{
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    border-radius: 25px;
+}
+#change-password form input{
+    width: 100%;
+    margin-bottom: 40px;
+    height: 50px;
+    font-size: 1rem;
+    border-radius: 25px;
+    border: solid var(--border-color) 1px;
+    background-color: var(--background-3);
+    padding-inline: 25px;
+}
+#change-password form button{
+    height: 50px;
+    font-size: 1rem;
+    border-radius: 25px;
+    background: var(--accent-transparent);
+    border: solid var(--border-color) 1px;
+    color: var(--font-color);
+}
+#change-password form h1{
+    color: var(--accent-color-2);
+    margin-bottom: 20px;
+}
+#change-password form button:hover{
+    background-color: var(--accent-color-2);
+}
+#change-password form button:focus{
+    outline: 0;
+}
+#change-password input:focus{
+    outline: 0;
+    color: var(--font-color);
+}

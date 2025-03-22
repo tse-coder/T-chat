@@ -1,119 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Change profile picture</title>
-    <link rel="icon" type="image/svg" href="./images/logo.svg">
-</head>
-<style>
-    :root {
-    --background: #090909;
-    --background-2: #000;
-    --background-3: #222222;
-    --accent-color: #00FF38;
-    --accent-color-2: #00FF38a2;
-    --border-color: #8f8f8f;
-    --font-color: #f9f9f9;
-    --background-transparent:#0007;
-    --accent-transparent:#00ff3738;
-    }
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        color: var(--font-color);
-        font-family: "Roboto", Verdana, Geneva, Tahoma, sans-serif;
-    }
-    body{
-        width: 100vw;
-        height: 100vh;
-        display: grid;
-        place-items: center;
-        background: var(--background);
-    }
-    form{
-        width: 100%;
-        max-width: 400px;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        padding: 30px;
-        border-radius: 25px;
-    }
-    form button,
-    .choose-file{
-        height: 50px;
-        font-size: 1.3rem;
-        font-weight: 500;
-        border-radius: 25px;
-        background: var(--accent-transparent);
-        border: solid var(--border-color) 1px;
-        color: var(--font-color);
-        padding-block: 7px;
-        cursor: pointer;
-        margin-block: 20px;
-    }
-    form button{
-        display: none;
-    }
-    form h1{
-        color: var(--accent-color-2);
-        margin-bottom: 20px;
-    }
-    form button:hover,
-    .choose-file:hover{
-        background-color: var(--accent-color-2);
-    }
-    form button:focus{
-        outline: 0;
-    }
-    img{
-        width: 100%;
-        aspect-ratio: 1 / 1;
-        object-fit: cover;
-        border-radius: 50%;
-        border: var(--accent-color) solid 1px;
-        box-shadow: var(--accent-color-2) 0 0 3px 2px;
-        display: none;
-    }
-</style>
-<body>
-    <form action="/changepp" method="post" enctype="multipart/form-data">
-        <h1>change Profile Picture</h1>
-        <label for="new-picture" class="choose-file">
-            choose file
-            <input type="file" name="picture"  id="new-picture" hidden onchange=previewImage()>
-        </label>
-        <img src="" alt="new-pp" id="pp">
-        <input type="hidden" name="username" value=<%= user %>>
-        <% if (locals.error) { %>
-         <p style="color: rgb(170, 1, 1);"><%= error %></p>
-        <% } %>
-        <button type="submit" id="submit">Done</button>
-    </form>
-</body>
-<script>
-    const previewImage = ()=>{
-        const inFile = document.getElementById('new-picture');
-        const file = inFile.files[0]
-        let base64String;
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = async(event)=> {
-                const formdata = new FormData()
+<%- include("./partials/header.ejs") %>
 
-                formdata.append('image',file)
+    <div id="change-pp">
+        <form action="/changepp" method="post" enctype="multipart/form-data">
+            <h1>change Profile Picture</h1>
+            <label for="new-picture" class="choose-file">
+                choose file
+                <input type="file" name="picture"  id="new-picture" hidden onchange=previewImage()>
+            </label>
+            <img src="" alt="new-pp" id="pp">
+            <input type="hidden" name="username" value=<%= user %>>
+            <% if (locals.error) { %>
+             <p style="color: rgb(170, 1, 1);"><%= error %></p>
+            <% } %>
+            <button type="submit" id="submit">Done</button>
+        </form>
+    </div>
 
-                let fileUrl = event.target.result
-                base64String = fileUrl.split(',')[1]; // Extract base64 string without the "data:image/..." part
-                document.getElementById("pp").style.display = "block"
-                document.getElementById("pp").src = fileUrl
-                document.getElementById("submit").style.display = "block"
-            };
-
-            reader.readAsDataURL(file); // Convert file to base64
-        }
-    }
-</script>
-</html>
+<%- include("./partials/footer.ejs") %>
