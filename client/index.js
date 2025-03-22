@@ -10,7 +10,7 @@ import bcrypt from "bcrypt";
 
 const app = express();
 const port = process.env.PORT || 3000;
-const serverURL = `http://localhost:5000`;
+const serverURL = `https://t-chat-server.onrender.com`;
 
 let users = []
 let messages = []

@@ -9,7 +9,7 @@ import variables from "./config/env.js";
 
 await connectDB();
 
-const origin = "http://localhost:3000"; //set origin to enable cors for it
+const origin = "t-messanger.onrender.com"; //set origin to enable cors for it
 
 const app = express();
 const server = http.createServer(app);
