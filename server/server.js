@@ -18,7 +18,8 @@ app.use(auth); //handles authentication requests
 
 app.use(router); //handles normal requests
 
-app.use(cors({ origin: origin, methods: ["GET", "POST"] })); // Enable CORS for Express requests
+// app.use(cors({ origin: origin, methods: ["GET", "POST"] })); // Enable CORS for Express requests
+app.use(cors());
 
 const io = new Server(server, {
   // Enable CORS for Socket.io
