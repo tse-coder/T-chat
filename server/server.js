@@ -9,16 +9,17 @@ import variables from "./config/env.js";
 
 await connectDB();
 
-const origin = ["t-messanger.onrender.com","http://localhost:8081"]; //set origin to enable cors for it
+const origin = ["https://t-messanger.onrender.com","http://localhost:8081"]; //set origin to enable cors for it
 
 const app = express();
 const server = http.createServer(app);
+
+app.use(cors({ origin: origin, methods: ["GET", "POST"] })); // Enable CORS for Express requests
 
 app.use(auth); //handles authentication requests
 
 app.use(router); //handles normal requests
 
-app.use(cors({ origin: origin, methods: ["GET", "POST"] })); // Enable CORS for Express requests
 
 
 const io = new Server(server, {
